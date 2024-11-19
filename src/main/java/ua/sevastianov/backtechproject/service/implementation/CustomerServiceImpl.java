@@ -2,30 +2,41 @@ package ua.sevastianov.backtechproject.service.implementation;
 
 import org.springframework.stereotype.Service;
 import ua.sevastianov.backtechproject.domain.Customer;
+import ua.sevastianov.backtechproject.repositories.CustomerRepository;
 import ua.sevastianov.backtechproject.service.CustomerService;
 
 
 import java.util.*;
 @Service
 public class CustomerServiceImpl implements CustomerService {
-    private Map<Long, Customer> customers = new HashMap<>();
-    private Long nextId = 1L;
+    private final CustomerRepository customerRepository;
 
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
+    @Override
     public Customer createCustomer(Customer customer) {
-        customer = customer.toBuilder().id(nextId++).build();
-        customers.put(customer.getId(), customer);
-        return customer;
+        return customerRepository.save(customer);
     }
 
+    @Override
     public Optional<Customer> getCustomer(Long id) {
-        return Optional.ofNullable(customers.get(id));
+        return customerRepository.findById(id);
     }
 
+    @Override
     public List<Customer> getAllCustomers() {
-        return new ArrayList<>(customers.values());
+        return customerRepository.findAll();
     }
 
+    @Override
     public boolean deleteCustomer(Long id) {
-        return customers.remove(id) != null;
+        if (customerRepository.existsById(id)) {
+            customerRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
+

@@ -17,16 +17,32 @@ public class CategoryController {
     }
 
     @PostMapping
-    @ResponseBody
-    public Category createCategory(@RequestBody Category category) {
-        return categoryService.createCategory(category);
-
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+        try {
+            return ResponseEntity.ok(categoryService.createCategory(category));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @GetMapping
-    @ResponseBody
     public List<Category> getAllCategories() {
         return categoryService.getAllCategories();
+    }
+
+    @GetMapping("/visible/{userId}")
+    public List<Category> getVisibleCategories(@PathVariable Long userId) {
+        return categoryService.getVisibleCategoriesForUser(userId);
+    }
+
+    @GetMapping("/global")
+    public List<Category> getGlobalCategories() {
+        return categoryService.getGlobalCategories();
+    }
+
+    @GetMapping("/private/{userId}")
+    public List<Category> getPrivateCategories(@PathVariable Long userId) {
+        return categoryService.getPrivateCategoriesForUser(userId);
     }
 
     @DeleteMapping("/{categoryId}")

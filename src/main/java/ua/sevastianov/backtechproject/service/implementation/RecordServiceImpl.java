@@ -2,6 +2,7 @@ package ua.sevastianov.backtechproject.service.implementation;
 
 import org.springframework.stereotype.Service;
 import ua.sevastianov.backtechproject.domain.Record;
+import ua.sevastianov.backtechproject.repositories.RecordRepository;
 import ua.sevastianov.backtechproject.service.RecordService;
 
 import java.util.HashMap;
@@ -13,37 +14,44 @@ import java.util.stream.Collectors;
 
 @Service
 public class RecordServiceImpl implements RecordService {
-    private Map<Long, Record> records = new HashMap<>();
-    private Long nextId = 1L;
+    private final RecordRepository recordRepository;
 
+    public RecordServiceImpl(RecordRepository recordRepository) {
+        this.recordRepository = recordRepository;
+    }
+
+    @Override
     public Record createRecord(Record record) {
-        record = record.toBuilder().id(nextId++).build();
-        records.put(record.getId(), record);
-        return record;
+        return recordRepository.save(record);
     }
 
+    @Override
     public Optional<Record> getRecord(Long id) {
-        return Optional.ofNullable(records.get(id));
+        return recordRepository.findById(id);
     }
 
+    @Override
     public List<Record> getRecordsByUser(Long userId) {
-        return records.values().stream()
-                .filter(record -> record.getUserId().equals(userId))
-                .collect(Collectors.toList());
+        return recordRepository.findByUserId(userId);
     }
 
-    public List<Record> getRecordsByCategory(Long userId, Long categoryId) {
-        return records.values().stream()
-                .filter(record -> record.getUserId().equals(userId) && record.getCategoryId().equals(categoryId))
-                .collect(Collectors.toList());
-    }
+    @Override
     public List<Record> getRecordsByCategory(Long categoryId) {
-        return records.values().stream()
-                .filter(record -> record.getCategoryId().equals(categoryId))
-                .collect(Collectors.toList());
+        return recordRepository.findByCategoryId(categoryId);
     }
 
+    @Override
+    public List<Record> getRecordsByCategory(Long userId, Long categoryId) {
+        return recordRepository.findByUserIdAndCategoryId(userId, categoryId);
+    }
+
+    @Override
     public boolean deleteRecord(Long id) {
-        return records.remove(id) != null;
+        if (recordRepository.existsById(id)) {
+            recordRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }
+
