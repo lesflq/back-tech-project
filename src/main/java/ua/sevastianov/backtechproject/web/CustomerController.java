@@ -1,8 +1,9 @@
 package ua.sevastianov.backtechproject.web;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import ua.sevastianov.backtechproject.DTO.customer.CustomerDTO;
 import ua.sevastianov.backtechproject.service.implementation.CustomerServiceImpl;
-import ua.sevastianov.backtechproject.domain.Customer;
+
 import java.util.List;
 @RestController
 @RequestMapping("/customers")
@@ -14,19 +15,19 @@ public class CustomerController {
     }
 
     @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
+    public CustomerDTO createCustomer(@RequestBody CustomerDTO customer) {
         return customerService.createCustomer(customer);
     }
 
     @GetMapping("/{customerId}")
-    public ResponseEntity<Customer> getCustomer(@PathVariable(name = "customerId") Long customerId) {
+    public ResponseEntity<CustomerDTO> getCustomer(@PathVariable(name = "customerId") Long customerId) {
         return customerService.getCustomer(customerId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public List<Customer> getAllCustomers() {
+    public List<CustomerDTO> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 

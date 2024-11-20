@@ -1,38 +1,46 @@
 package ua.sevastianov.backtechproject.service.implementation;
 
 import org.springframework.stereotype.Service;
-import ua.sevastianov.backtechproject.domain.Category;
-import ua.sevastianov.backtechproject.domain.CategoryType;
+import ua.sevastianov.backtechproject.DTO.category.CategoryDTO;
+import ua.sevastianov.backtechproject.domain.category.Category;
+import ua.sevastianov.backtechproject.domain.category.CategoryType;
+import ua.sevastianov.backtechproject.mapper.CategoryMapper;
 import ua.sevastianov.backtechproject.repositories.CategoryRepository;
 import ua.sevastianov.backtechproject.service.CategoryService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
     }
 
     @Override
-    public Category createCategory(Category category) {
-        if (category.getType() == CategoryType.PRIVATE && category.getOwner() == null) {
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        if (categoryDTO.getType() == CategoryType.PRIVATE && categoryDTO.getOwnerId() == null) {
             throw new IllegalArgumentException("PRIVATE category must have an owner.");
         }
-        if (category.getType() == CategoryType.GLOBAL && category.getOwner() != null) {
+        if (categoryDTO.getType() == CategoryType.GLOBAL && categoryDTO.getOwnerId() != null) {
             throw new IllegalArgumentException("GLOBAL category cannot have an owner.");
         }
-        return categoryRepository.save(category);
+
+        Category category = categoryMapper.toEntity(categoryDTO);
+        Category savedCategory = categoryRepository.save(category);
+
+        return categoryMapper.toDTO(savedCategory);
     }
 
     @Override
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryDTO> getAllCategories() {
+        return categoryRepository.findAll().stream()
+                .map(categoryMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -43,19 +51,27 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return false;
     }
+
     @Override
-    public List<Category> getVisibleCategoriesForUser(Long userId) {
-        return categoryRepository.findVisibleCategoriesForUser(userId);
+    public List<CategoryDTO> getVisibleCategoriesForUser(Long userId) {
+        return categoryRepository.findVisibleCategoriesForUser(userId).stream()
+                .map(categoryMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Category> getGlobalCategories() {
-        return categoryRepository.findByType(CategoryType.GLOBAL);
+    public List<CategoryDTO> getGlobalCategories() {
+        return categoryRepository.findByType(CategoryType.GLOBAL).stream()
+                .map(categoryMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Category> getPrivateCategoriesForUser(Long userId) {
-        return categoryRepository.findByTypeAndOwner_Id(CategoryType.PRIVATE, userId);
+    public List<CategoryDTO> getPrivateCategoriesForUser(Long userId) {
+        return categoryRepository.findByTypeAndOwner_Id(CategoryType.PRIVATE, userId).stream()
+                .map(categoryMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
+
 

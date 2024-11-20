@@ -1,8 +1,7 @@
-package ua.sevastianov.backtechproject.domain;
+package ua.sevastianov.backtechproject.domain.customer;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 @Entity
 @Table(name = "customer")
 @Value
@@ -15,4 +14,5 @@ public class Customer {
     Long id;
 
     String name;
+
 }

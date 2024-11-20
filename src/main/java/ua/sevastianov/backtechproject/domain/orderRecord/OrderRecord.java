@@ -1,10 +1,12 @@
-package ua.sevastianov.backtechproject.domain;
+package ua.sevastianov.backtechproject.domain.orderRecord;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Value;
+import ua.sevastianov.backtechproject.domain.category.Category;
+import ua.sevastianov.backtechproject.domain.customer.Customer;
 
 import java.time.LocalDateTime;
 @Entity
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 @Builder(toBuilder = true)
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class Record {
+public class OrderRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

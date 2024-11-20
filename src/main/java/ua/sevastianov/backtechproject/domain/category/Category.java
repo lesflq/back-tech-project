@@ -1,10 +1,11 @@
-package ua.sevastianov.backtechproject.domain;
+package ua.sevastianov.backtechproject.domain.category;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.Value;
+import ua.sevastianov.backtechproject.domain.customer.Customer;
 
 @Value
 @Builder(toBuilder = true)

@@ -1,36 +1,33 @@
 package ua.sevastianov.backtechproject.web;
-import ua.sevastianov.backtechproject.domain.Record;
+import ua.sevastianov.backtechproject.DTO.orderRecord.OrderRecordDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.sevastianov.backtechproject.service.implementation.RecordServiceImpl;
+import ua.sevastianov.backtechproject.service.implementation.OrderRecordServiceImpl;
 
 import java.util.List;
 @RestController
 @RequestMapping("/record")
-public class RecordController {
-    private final RecordServiceImpl recordService;
+public class OrderRecordController {
+    private final OrderRecordServiceImpl recordService;
 
-    public RecordController(RecordServiceImpl recordService) {
+    public OrderRecordController(OrderRecordServiceImpl recordService) {
         this.recordService = recordService;
     }
 
     @PostMapping
-    @ResponseBody
-    public Record createRecord(@RequestBody Record record) {
+    public OrderRecordDTO createRecord(@RequestBody OrderRecordDTO record) {
         return recordService.createRecord(record);
     }
 
     @GetMapping("/{recordId}")
-    @ResponseBody
-    public ResponseEntity<Record> getRecord(@PathVariable(name = "recordId") Long recordId) {
+    public ResponseEntity<OrderRecordDTO> getRecord(@PathVariable(name = "recordId") Long recordId) {
         return recordService.getRecord(recordId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    @ResponseBody
-    public ResponseEntity<List<Record>> getRecords(
+    public ResponseEntity<List<OrderRecordDTO>> getRecords(
             @RequestParam(required = false) Long userId,
             @RequestParam(required = false) Long categoryId) {
 
@@ -46,7 +43,7 @@ public class RecordController {
             return ResponseEntity.ok(recordService.getRecordsByCategory(categoryId));
         }
 
-        return ResponseEntity.ok(recordService.getRecordsByCategory(userId, categoryId));
+        return ResponseEntity.ok(recordService.getRecordsByBothParams(userId, categoryId));
     }
 
     @DeleteMapping("/{recordId}")

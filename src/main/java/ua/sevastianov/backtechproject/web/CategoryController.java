@@ -2,7 +2,8 @@ package ua.sevastianov.backtechproject.web;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.sevastianov.backtechproject.domain.Category;
+import ua.sevastianov.backtechproject.DTO.category.CategoryDTO;
+import ua.sevastianov.backtechproject.domain.category.Category;
 import ua.sevastianov.backtechproject.service.implementation.CategoryServiceImpl;
 
 import java.util.List;
@@ -17,31 +18,31 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
         try {
-            return ResponseEntity.ok(categoryService.createCategory(category));
+            return ResponseEntity.ok(categoryService.createCategory(categoryDTO));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
     }
 
     @GetMapping
-    public List<Category> getAllCategories() {
+    public List<CategoryDTO> getAllCategories() {
         return categoryService.getAllCategories();
     }
 
     @GetMapping("/visible/{userId}")
-    public List<Category> getVisibleCategories(@PathVariable Long userId) {
+    public List<CategoryDTO> getVisibleCategories(@PathVariable Long userId) {
         return categoryService.getVisibleCategoriesForUser(userId);
     }
 
     @GetMapping("/global")
-    public List<Category> getGlobalCategories() {
+    public List<CategoryDTO> getGlobalCategories() {
         return categoryService.getGlobalCategories();
     }
 
     @GetMapping("/private/{userId}")
-    public List<Category> getPrivateCategories(@PathVariable Long userId) {
+    public List<CategoryDTO> getPrivateCategories(@PathVariable Long userId) {
         return categoryService.getPrivateCategoriesForUser(userId);
     }
 
