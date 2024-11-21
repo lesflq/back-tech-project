@@ -1,16 +1,22 @@
+version: '3.8'
 services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: root
+      spring_jpa_properties_hibernate_default_schema: "backend-technologies"
+    depends_on:
+      - db
   db:
     image: postgres:15
-    container_name: postgres_db
-    restart: always
-    ports:
-      - "5432:5432"
     environment:
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
-      POSTGRES_DB: postgres
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-volumes:
-  db_data:
+    ports:
+      - "5432:5432"
