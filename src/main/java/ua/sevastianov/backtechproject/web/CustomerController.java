@@ -1,4 +1,5 @@
 package ua.sevastianov.backtechproject.web;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import ua.sevastianov.backtechproject.DTO.customer.CustomerDTO;
@@ -15,7 +16,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public CustomerDTO createCustomer(@RequestBody CustomerDTO customer) {
+    public CustomerDTO createCustomer(@RequestBody @Valid CustomerDTO customer) {
         return customerService.createCustomer(customer);
     }
 

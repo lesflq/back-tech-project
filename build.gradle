@@ -32,6 +32,8 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.2'
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-parent', version: '3.3.5', ext: 'pom'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.3.5'
 
     implementation 'org.springframework:spring-context:6.1.14'
     implementation 'org.springframework:spring-core:6.2.0'

@@ -1,4 +1,5 @@
 package ua.sevastianov.backtechproject.web;
+import jakarta.validation.Valid;
 import ua.sevastianov.backtechproject.DTO.orderRecord.OrderRecordDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ public class OrderRecordController {
     }
 
     @PostMapping
-    public OrderRecordDTO createRecord(@RequestBody OrderRecordDTO record) {
+    public OrderRecordDTO createRecord(@RequestBody @Valid OrderRecordDTO record) {
         return recordService.createRecord(record);
     }
 

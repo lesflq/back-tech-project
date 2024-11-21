@@ -1,5 +1,6 @@
 package ua.sevastianov.backtechproject.web;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ua.sevastianov.backtechproject.DTO.category.CategoryDTO;
@@ -18,7 +19,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody @Valid CategoryDTO categoryDTO) {
         try {
             return ResponseEntity.ok(categoryService.createCategory(categoryDTO));
         } catch (IllegalArgumentException e) {
