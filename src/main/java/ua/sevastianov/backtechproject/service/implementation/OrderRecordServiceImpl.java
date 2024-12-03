@@ -7,6 +7,7 @@ import ua.sevastianov.backtechproject.mapper.OrderRecordMapper;
 import ua.sevastianov.backtechproject.repositories.OrderRecordRepository;
 import ua.sevastianov.backtechproject.service.OrderRecordService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,7 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     @Override
     public OrderRecordDTO createRecord(OrderRecordDTO orderRecordDTO) {
         OrderRecord orderRecord = orderRecordMapper.toEntity(orderRecordDTO);
+        orderRecord.setTimestamp(LocalDateTime.now());
         OrderRecord savedOrderRecord = orderRecordRepository.save(orderRecord);
         return orderRecordMapper.toEntryDTO(savedOrderRecord);
     }

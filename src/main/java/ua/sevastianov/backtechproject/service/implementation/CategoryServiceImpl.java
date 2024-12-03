@@ -29,8 +29,9 @@ public class CategoryServiceImpl implements CategoryService {
         if (categoryDTO.getType() == CategoryType.GLOBAL && categoryDTO.getOwnerId() != null) {
             throw new IllegalArgumentException("GLOBAL category cannot have an owner.");
         }
-
+        System.out.println("Type DTO: " + categoryDTO.getType());
         Category category = categoryMapper.toEntity(categoryDTO);
+        System.out.println("Type Default: " + category.getType());
         Category savedCategory = categoryRepository.save(category);
 
         return categoryMapper.toDTO(savedCategory);

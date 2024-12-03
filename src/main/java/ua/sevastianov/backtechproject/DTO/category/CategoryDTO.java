@@ -23,6 +23,5 @@ public class CategoryDTO {
     @NotNull(message = "Category type cannot be null")
     CategoryType type;
 
-    @NotNull(message = "Owner ID cannot be null")
     Long ownerId;
 }

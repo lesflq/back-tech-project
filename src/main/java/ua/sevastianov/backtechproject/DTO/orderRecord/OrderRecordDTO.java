@@ -22,7 +22,6 @@ public class OrderRecordDTO {
     @NotNull(message = "Category ID cannot be null")
     Long categoryId;
 
-    @NotNull(message = "Timestamp cannot be null")
     LocalDateTime timestamp;
 
     @NotNull(message = "Amount cannot be null")

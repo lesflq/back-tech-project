@@ -1,17 +1,14 @@
 package ua.sevastianov.backtechproject.domain.orderRecord;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Value;
+import lombok.*;
 import ua.sevastianov.backtechproject.domain.category.Category;
 import ua.sevastianov.backtechproject.domain.customer.Customer;
 
 import java.time.LocalDateTime;
 @Entity
 @Table(name = "record")
-@Value
+@Data
 @Builder(toBuilder = true)
 @NoArgsConstructor(force = true)
 @AllArgsConstructor

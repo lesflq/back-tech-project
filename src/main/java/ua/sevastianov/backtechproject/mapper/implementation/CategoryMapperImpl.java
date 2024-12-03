@@ -11,7 +11,9 @@ public class CategoryMapperImpl implements CategoryMapper {
     @Override
     public Category toEntity(CategoryDTO categoryDTO) {
         if(categoryDTO == null) return null;
-        return Category.builder().id(categoryDTO.getId()).name(categoryDTO.getName())
+        return Category.builder().id(categoryDTO.getId())
+                .name(categoryDTO.getName())
+                .type(categoryDTO.getType())
                 .owner(categoryDTO.getOwnerId() != null
                         ? Customer.builder().id(categoryDTO.getOwnerId()).build()
                         : null)
