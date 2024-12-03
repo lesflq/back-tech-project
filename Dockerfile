@@ -23,8 +23,9 @@ ENV SPRING_DATASOURCE_USERNAME=ussser
 ENV SPRING_DATASOURCE_PASSWORD=1XtU6j3XRO8yzLUIfz89QQjZd6b4qcWD
 ENV SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
 ENV SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA=backend-technologies
-ENV SPRING_FLYWAY_ENABLED=true
+ENV SPRING_FLYWAY_ENABLED=false
 ENV SPRING_FLYWAY_LOCATIONS=classpath:db/migration
+ENV spring_autoconfigure_exclude=org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
 
 EXPOSE 8080
 
