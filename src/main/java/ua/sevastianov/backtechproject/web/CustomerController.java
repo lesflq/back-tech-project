@@ -1,5 +1,4 @@
 package ua.sevastianov.backtechproject.web;
-import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import ua.sevastianov.backtechproject.DTO.customer.CustomerDTO;
@@ -15,10 +14,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-//    @PostMapping
-//    public CustomerDTO registerCustomer(@RequestBody @Valid CustomerDTO customer) {
-//        return customerService.registeCustomer(customer);
-//    }
 
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerDTO> getCustomer(@PathVariable(name = "customerId") Long customerId) {

@@ -13,20 +13,21 @@ import ua.sevastianov.backtechproject.domain.customer.Customer;
 import ua.sevastianov.backtechproject.exception.AuthenticationException;
 import ua.sevastianov.backtechproject.mapper.CustomerMapper;
 import ua.sevastianov.backtechproject.repositories.CustomerRepository;
+import ua.sevastianov.backtechproject.service.AuthService;
 
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
 @Service
-public class AuthServiceImpl {
+public class AuthServiceImpl implements AuthService {
 
     private final CustomerRepository customerRepository;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final CustomerMapper customerMapper;
     private final String JWT_SECRET = "ВашДовгийСекретнийКлючЩонайменше64Символи";
-    private final long jwtExpirationMs = 86400000; // 1 день у мілісекундах
+    private final long jwtExpirationMs = 86400000;
 
 
     public AuthServiceImpl(CustomerRepository customerRepository, AuthenticationManager authenticationManager,
@@ -70,7 +71,7 @@ public class AuthServiceImpl {
     private String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
-                .claim("authorities", List.of("ROLE_USER")) // Використовуйте список
+                .claim("authorities", List.of("ROLE_USER"))
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, Base64.getEncoder().encodeToString(JWT_SECRET.getBytes()))
