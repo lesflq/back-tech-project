@@ -15,10 +15,10 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping
-    public CustomerDTO createCustomer(@RequestBody @Valid CustomerDTO customer) {
-        return customerService.createCustomer(customer);
-    }
+//    @PostMapping
+//    public CustomerDTO registerCustomer(@RequestBody @Valid CustomerDTO customer) {
+//        return customerService.registeCustomer(customer);
+//    }
 
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerDTO> getCustomer(@PathVariable(name = "customerId") Long customerId) {

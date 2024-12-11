@@ -7,7 +7,7 @@ import java.util.Optional;
 
 
 public interface CustomerService {
-    CustomerDTO createCustomer(CustomerDTO customerDTO);
+//    CustomerDTO registeCustomer(CustomerDTO customerDTO);
 
     Optional<CustomerDTO> getCustomer(Long id);
 

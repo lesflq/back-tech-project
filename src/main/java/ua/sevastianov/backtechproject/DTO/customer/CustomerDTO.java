@@ -4,8 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-@Value
-@Builder
+@Data
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 public class CustomerDTO {
@@ -13,5 +13,7 @@ public class CustomerDTO {
 
     @NotBlank(message = "Name cannot be blank")
     @Size(max = 100, message = "Name cannot exceed 100 characters")
-    String name;
+    String username;
+    @NotBlank(message = "Password is required")
+    String password;
 }

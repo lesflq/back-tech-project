@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 @Entity
 @Table(name = "customer")
-@Value
+@Data
 @Builder(toBuilder = true)
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
@@ -12,7 +12,10 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @Column(nullable = false, unique = true)
+    String username;
 
-    String name;
+    @Column(nullable = false)
+    String password;
 
 }

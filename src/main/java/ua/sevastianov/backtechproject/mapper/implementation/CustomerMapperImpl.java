@@ -16,7 +16,7 @@ public class CustomerMapperImpl implements CustomerMapper {
 
         return Customer.builder()
                 .id(customerDTO.getId()) // Якщо id задається
-                .name(customerDTO.getName())
+                .username(customerDTO.getUsername())
                 .build();
     }
 
@@ -28,7 +28,7 @@ public class CustomerMapperImpl implements CustomerMapper {
 
         return CustomerDTO.builder()
                 .id(customer.getId())
-                .name(customer.getName())
+                .username(customer.getUsername())
                 .build();
     }
 }
